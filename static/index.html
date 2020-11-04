@@ -21,7 +21,7 @@
       <button id="decrement">decrement</button>
     </div>
     <script>
-      const socket = new WebSocket(`ws://${window.location.hostname}:1234`);
+      const socket = new WebSocket(`ws://${window.location.host}`);
       const value = document.getElementById("value");
 
       document.getElementById("increment").addEventListener("click", () => {
