@@ -2,39 +2,100 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>increment-decrement</title>
+    <title>ted</title>
   </head>
   <style>
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
-        "Helvetica Neue", sans-serif;
-      height: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+        Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+      height: 100vh;
       display: flex;
-      justify-content: center;
+      justify-content: flex-end;
       align-items: center;
+      flex-direction: column;
+      margin: 0;
+    }
+
+    div.message {
+      padding: 10px;
+      border-left: 3px solid #ececec;
+      margin-bottom: 10px;
+      width: 40vw;
+    }
+
+    div#messages {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    div {
+      display: flex;
+    }
+
+    input,
+    button {
+      padding: 10px;
+      border: none;
+      background: #7fffd4;
+      outline: none;
+    }
+
+    input {
+      border-top-left-radius: 10px;
+      border-bottom-left-radius: 10px;
+    }
+
+    button {
+      border-top-right-radius: 10px;
+      border-bottom-right-radius: 10px;
+    }
+
+    input::placeholder {
+      color: #42836d;
+    }
+
+    #inputs {
+      padding-bottom: 10px;
     }
   </style>
   <body>
-    <div>
-      <button id="increment">increment</button>
-      <h2 id="value">0</h2>
-      <button id="decrement">decrement</button>
+    <div id="messages"></div>
+    <div id="inputs">
+      <input type="text" id="input" placeholder="Message" />
+      <button id="button">send</button>
     </div>
     <script>
-      const protocol = window.location.href.includes("localhost") ? "ws" : "wss";
+      const protocol = window.location.href.includes("localhost")
+        ? "ws"
+        : "wss";
+
       const socket = new WebSocket(`${protocol}://${window.location.host}`);
-      const value = document.getElementById("value");
 
-      document.getElementById("increment").addEventListener("click", () => {
-        socket.send("INCREMENT");
+      const elements = {
+        input: document.getElementById("input"),
+        button: document.getElementById("button"),
+        messages: document.getElementById("messages"),
+      };
+
+      function listener() {
+        socket.send(elements.input.value);
+        elements.input.value = "";
+      }
+
+      elements.input.addEventListener("keyup", (e) => {
+        if (e.key === "Enter") listener();
       });
 
-      document.getElementById("decrement").addEventListener("click", () => {
-        socket.send("DECREMENT");
-      });
+      elements.button.addEventListener("click", listener);
 
       socket.onmessage = function (raw) {
-        value.textContent = raw.data;
+        const child = document.createElement("div");
+        child.classList.add("message");
+
+        child.textContent = raw.data.toString();
+
+        elements.messages.appendChild(child);
       };
     </script>
   </body>

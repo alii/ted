@@ -1,8 +1,6 @@
 import http from "http";
 import WebSocket from "ws";
 
-let value: number = 0;
-
 export interface CustomSocket extends WebSocket {
   isAlive?: boolean;
 }
@@ -13,7 +11,9 @@ export class WS {
 
   constructor(server: http.Server) {
     this.wss = new WebSocket.Server({ server });
-    this.wss.on("connection", (socket: CustomSocket) => this.handleConnection(socket));
+    this.wss.on("connection", (socket: CustomSocket) =>
+      this.handleConnection(socket)
+    );
 
     this.heartbeat = setInterval(() => {
       this.wss.clients.forEach((client: CustomSocket) => {
@@ -26,26 +26,13 @@ export class WS {
   }
 
   private handleConnection(socket: CustomSocket) {
-    socket.send(value);
-
     socket.isAlive = true;
     socket.on("pong", () => (socket.isAlive = true));
 
     socket.on("message", (raw) => {
-      const data = raw.toString("utf-8");
-
-      switch (data) {
-        case "INCREMENT":
-          value += 1;
-          break;
-        case "DECREMENT":
-          value -= 1;
-          break;
-        default:
-          return;
-      }
-
-      this.wss.clients.forEach((client) => client.send(value));
+      const data = raw.toString("utf-8").trim();
+      if (data === "") return;
+      this.wss.clients.forEach((client) => client.send(data));
     });
   }
 }
