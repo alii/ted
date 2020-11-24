@@ -61,12 +61,24 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1606249435116</updated>
-      <workItem from="1606249436382" duration="3652000" />
+      <workItem from="1606249436382" duration="3861000" />
     </task>
+    <task id="LOCAL-00001" summary="yh">
+      <created>1606253104315</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1606253104315</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="yh" />
+    <option name="LAST_COMMIT_MESSAGE" value="yh" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
