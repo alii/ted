@@ -101,7 +101,7 @@
         child.textContent = raw.data.toString();
 
         elements.messages.appendChild(child);
-        if (document.body.scrollHeight - 50 > window.scrollY) return;
+        if (document.body.scrollHeight - 150 > window.scrollY) return;
         window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
       };
     </script>
