@@ -86,6 +86,7 @@
       function listener() {
         socket.send(elements.input.value);
         elements.input.value = "";
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })
       }
 
       elements.input.addEventListener("keyup", (e) => {
